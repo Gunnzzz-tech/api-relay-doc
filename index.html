@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3rd project</title>
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #000;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .link-btn {
+      border: 1px solid #444;
+      background: #0f0f0f;
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .link-btn:hover {
+      border-color: #777;
+      background: #1a1a1a;
+    }
+
+    .content-box {
+      display: none;
+      width: min(900px, 100%);
+      margin-top: 16px;
+      border: 1px solid #333;
+      border-radius: 10px;
+      background: #050505;
+      padding: 16px;
+      max-height: 65vh;
+      overflow: auto;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="buttons">
+    <span style="color: #fff; align-self: center;">UiPath.System.Activities</span>
+    <a class="link-btn" href="https://drive.google.com/drive/folders/1cQuxCozYAxLREWS44fwwmyaL_aNL7zKV?usp=sharing" target="_blank" rel="noopener noreferrer">3rd project</a>
+    <button id="program5Btn" class="link-btn" type="button">Program 5</button>
+    <a class="link-btn" href="https://drive.google.com/drive/folders/1cQuxCozYAxLREWS44fwwmyaL_aNL7zKV?usp=sharing" target="_blank" rel="noopener noreferrer">3rd project</a>
+  </div>
+
+  <div id="program5Content" class="content-box">
+Setup (one-time, 2 minutes)
+Install the Chrome extension -- UiPath needs this to talk to Chrome.
+In Studio's top menu: Tools -> UiPath Extensions -> Chrome. A Chrome tab opens, click "Add to Chrome," done. Restart Chrome to be safe.
+Create the project
+
+UiPath Studio start screen -> New Project -> Process
+Name: Bangalore_Temperature_Automation
+Location: leave default
+Description: optional
+Click Create
+
+Studio opens with an empty Main.xaml showing a blank canvas with the text "Drop activity here."
+Get the Sequence container in place
+
+In the Activities panel on the left, search: sequence
+Drag Sequence onto the canvas
+Double-click it to open it (you're now inside the Sequence)
+
+Add Open Browser
+
+Activities panel -> search: open browser
+Drag Open Browser into the Sequence
+Click on the Open Browser activity to select it
+In the URL field at the top of the activity, type: "https://www.google.com" (quotes included -- UiPath uses VB.NET expressions, strings need quotes)
+Right side Properties panel -> find UseBrowser -> set to Chrome
+
+You'll see Open Browser has a "Do" body inside it -- that's where everything else goes.
+Open Chrome to Google manually first
+Before adding any more activities, open a regular Chrome window and go to google.com, then search "Bangalore Temperature" so you can see the result page with the temperature card. Keep this Chrome window open the whole time you're building. This is what you'll point UiPath at when you indicate elements.
+Add Type Into
+
+Search activities: type into
+Drag Type Into into the "Do" body of Open Browser
+The activity shows "Indicate on screen" link at the top -- click it
+Studio minimizes. Move mouse to your Chrome window. You'll see UI elements highlight in blue as you hover
+Hover over the Google search input box until it's outlined in blue -> click it
+Studio reappears, the activity now shows it captured the search box
+In the "Type your text here" field, type: "Bangalore Temperature" (with quotes)
+
+Add Delay
+
+Search: delay
+Drag Delay below Type Into
+Properties -> Duration: 00:00:02 (2 seconds)
+
+Add Click
+
+Search: click
+Drag Click below the Delay
+Click "Indicate on screen"
+On Chrome, hover over the "Google Search" button below the search box -> click it
+
+Optional shortcut: if Click on Google's button gives you trouble (it often does), delete the Click activity and instead change the Type Into text to "Bangalore Temperature[k(enter)]". The [k(enter)] presses Enter after typing, which submits the search and skips the button entirely. Many people prefer this.
+Add another Delay
+Same as before -- drag Delay below Click, set Duration to 00:00:03 (give the results time to load and the temperature card to appear)
+Add Get Text
+
+Search: get text
+Drag Get Text below the second Delay
+Click "Indicate on screen"
+On Chrome, hover over the big temperature number in Google's weather card (e.g. the "32" in "32C") -> click it
+Now you need to save the result into a variable. In the Properties panel, find Output -> Result
+Click in the Result field -> press Ctrl+K (this is the Studio shortcut to create a variable)
+Type variable name: temperatureText -> press Enter
+
+You just made a String variable that holds whatever Get Text grabbed.
+Add Message Box
+
+Search: message box
+Drag Message Box below Get Text
+In the Text field, type: "Current temperature in Bangalore: " + temperatureText
+
+Save and run
+
+Ctrl+S to save
+F5 to run
+  </div>
+
+  <script>
+    const program5Btn = document.getElementById("program5Btn");
+    const program5Content = document.getElementById("program5Content");
+
+    program5Btn.addEventListener("click", () => {
+      program5Content.style.display =
+        program5Content.style.display === "block" ? "none" : "block";
+    });
+  </script>
+</body>
+</html>
